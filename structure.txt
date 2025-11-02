@@ -1,0 +1,17 @@
+browser-performance-monitor/
+├── manifest.json
+├── options.html
+├── options.js
+├── structure.txt
+├── popup/
+│   ├── popup.html
+│   ├── popup.css
+│   └── popup.js
+├── background/
+│   └── background.js
+├── icons/
+│   ├── icon16.png
+│   ├── icon48.png
+│   └── icon128.png
+└── utils/
+    └── formatters.js

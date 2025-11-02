@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance Monitor</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>⚡ Performance Monitor</h1>
+      <div class="last-update">Loading...</div>
+    </header>
+    
+    <section class="system-overview">
+      <div class="stat-card">
+                <div class="stat-label">SYSTEM USED MEMORY</div>
+        <div class="stat-value" id="totalMemory">--</div> 
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">SYSTEM AVAILABLE</div>
+        <div class="stat-value" id="systemAvailable">--</div> 
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">ACTIVE TABS</div>
+        <div class="stat-value" id="activeTabs">--</div> 
+      </div>
+    </section>
+
+    <section class="chart-section">
+      <h3>System Memory History</h3>
+      <canvas id="memoryChart"></canvas>
+    </section>
+
+    <section class="actions">
+      <button id="refreshBtn" class="btn btn-primary">🔄 Refresh</button>
+      <button id="suspendAllBtn" class="btn btn-warning">💤 Suspend Inactive</button>
+    </section>
+    
+    <section class="tab-list">
+      <div class="section-header">
+        <h2 style="width:auto;">Tabs List</h2>
+<!--         <div class="sort-options">
+          <label>
+            <input type="radio" name="sort" value="memory" checked><p>Sort by Memory</p>
+          </label>
+          <label>
+            <input type="radio" name="sort" value="cpu"><p>Sort by CPU</p>
+          </label>
+        </div> -->
+      </div>
+      <div id="tab-sort-warning" class="warning-text"></div> 
+      <div id="tabListContainer">
+        <div class="loading">Loading tab data...</div>
+      </div>
+    </section>
+  </div>
+  
+  <script src="../utils/formatters.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

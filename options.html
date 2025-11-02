@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance Monitor Settings</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f7fa;
+      padding: 40px 20px;
+      color: #2c3e50;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      opacity: 0.9;
+      font-size: 14px;
+    }
+
+    .content {
+      padding: 30px;
+    }
+
+    .setting-group {
+      margin-bottom: 30px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #e1e8ed;
+    }
+
+    .setting-group:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .setting-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #2c3e50;
+    }
+
+    .setting-description {
+      font-size: 14px;
+      color: #6c757d;
+      margin-bottom: 15px;
+    }
+
+    .setting-control {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    input[type="number"] {
+      width: 100px;
+      padding: 8px 12px;
+      border: 2px solid #e1e8ed;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.2s;
+    }
+
+    input[type="number"]:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    select {
+      padding: 8px 12px;
+      border: 2px solid #e1e8ed;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      background: white;
+      transition: border-color 0.2s;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .unit {
+      color: #6c757d;
+      font-size: 14px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #e1e8ed;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: #667eea;
+      color: white;
+      flex: 1;
+    }
+
+    .btn-primary:hover {
+      background: #5568d3;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #e9ecef;
+      color: #495057;
+    }
+
+    .btn-secondary:hover {
+      background: #dee2e6;
+    }
+
+    .status-message {
+      padding: 12px 20px;
+      background: #d4edda;
+      color: #155724;
+      border-radius: 6px;
+      margin-top: 15px;
+      display: none;
+      animation: fadeIn 0.3s;
+    }
+
+    .status-message.show {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      background: #667eea;
+      color: white;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-left: 10px;
+    }
+
+    .info-box {
+      background: #e7f3ff;
+      border-left: 4px solid #2196F3;
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: #0d47a1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>⚙️ Settings</h1>
+      <p>Configure your browser performance monitor</p>
+    </div>
+
+    <div class="content">
+      <!-- Monitoring Settings -->
+      <div class="setting-group">
+        <div class="setting-title">Monitoring Interval</div>
+        <div class="setting-description">How often to check tab memory usage</div>
+        <div class="setting-control">
+          <input type="number" id="monitoringInterval" min="1" max="60" value="5">
+          <span class="unit">seconds</span>
+        </div>
+        <div class="info-box">
+          Lower values = more real-time data but slightly higher CPU usage
+        </div>
+      </div>
+
+      <!-- Memory Thresholds -->
+      <div class="setting-group">
+        <div class="setting-title">Memory Alert Thresholds</div>
+        <div class="setting-description">Set when to mark tabs as high memory usage</div>
+        <div class="setting-control">
+          <label>
+            High Memory:
+            <input type="number" id="highMemoryThreshold" min="100" max="2000" value="500">
+            <span class="unit">MB</span>
+          </label>
+          <label>
+            Medium Memory:
+            <input type="number" id="mediumMemoryThreshold" min="50" max="500" value="100">
+            <span class="unit">MB</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Auto-Suspend Settings -->
+      <div class="setting-group">
+        <div class="setting-title">Auto-Suspend<span class="badge">Beta</span></div>
+        <div class="setting-description">Automatically suspend inactive tabs to save memory</div>
+        <div class="setting-control">
+          <label>
+            <input type="checkbox" id="autoSuspendEnabled">
+            Enable auto-suspend
+          </label>
+        </div>
+        <div class="setting-control" style="margin-top: 10px;">
+          <label>
+            Suspend after:
+            <input type="number" id="autoSuspendDelay" min="5" max="120" value="30">
+            <span class="unit">minutes of inactivity</span>
+          </label>
+        </div>
+        <div class="info-box">
+          Pinned tabs and tabs playing audio will not be suspended
+        </div>
+      </div>
+
+      <!-- Badge Settings -->
+      <div class="setting-group">
+        <div class="setting-title">Badge Notifications</div>
+        <div class="setting-description">Show high memory tab count on extension icon</div>
+        <div class="setting-control">
+          <label>
+            <input type="checkbox" id="showBadge">
+            Show badge notifications
+          </label>
+        </div>
+      </div>
+
+      <!-- Display Settings -->
+      <div class="setting-group">
+        <div class="setting-title">Display Settings</div>
+        <div class="setting-description">Customize how information is displayed</div>
+        <div class="setting-control">
+          <label>
+            Default sort by:
+            <select id="defaultSort">
+              <option value="memory">Memory Usage</option>
+              <option value="cpu">CPU Usage</option>
+              <option value="title">Tab Title</option>
+            </select>
+          </label>
+        </div>
+        <div class="setting-control" style="margin-top: 10px;">
+          <label>
+            <input type="checkbox" id="showChart">
+            Show memory usage chart
+          </label>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button id="saveBtn" class="btn btn-primary">💾 Save Settings</button>
+        <button id="resetBtn" class="btn btn-secondary">🔄 Reset to Defaults</button>
+      </div>
+
+      <div id="statusMessage" class="status-message"></div>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
